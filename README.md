@@ -1,116 +1,114 @@
 # 🛡️ CryptoGuard
 
-### AI-Based Blockchain Transaction Risk & Anomaly Detection System
+## AI-Based Blockchain Transaction Risk & Anomaly Detection System
 
-> **Turning blockchain transaction data into explainable investigation signals.**
+**CryptoGuard** is a machine-learning and blockchain analytics system designed to identify **potentially high-risk cryptocurrency transactions** and prioritize them for further investigation.
 
-CryptoGuard is a machine-learning and blockchain analytics project designed to identify **potentially high-risk cryptocurrency transactions** by combining supervised machine learning, anomaly detection, and transaction-network analysis.
+The project combines:
 
-Rather than treating a transaction as simply *“licit”* or *“illicit”*, CryptoGuard produces an **investigation-oriented risk signal** that helps an analyst understand which transactions may deserve further examination.
+* 🤖 Supervised Machine Learning
+* 🚨 Anomaly Detection
+* 🕸️ Blockchain Transaction-Network Analysis
+* 🧠 Explainable AI
+* 📊 Risk Scoring
+* 🖥️ Interactive Data Visualization
+
+> **CryptoGuard does not determine criminality. It produces analytical signals that can help prioritize transactions for human investigation.**
 
 ---
 
-## 🔎 Why CryptoGuard?
+# 🎯 Problem Statement
 
-Blockchain transactions are transparent, but transparency does not automatically make transaction activity easy to investigate.
+Cryptocurrency transactions generate large volumes of interconnected blockchain data. Manually examining this activity is difficult because transaction behaviour can be complex, highly imbalanced, and distributed across transaction networks.
 
-Large transaction datasets can contain:
+Traditional transaction-level analysis may also miss unusual behaviour when a transaction does not have a known label.
 
-* highly imbalanced classes
-* unusual transaction behaviour
-* complex transaction relationships
-* hidden patterns across multiple features
-* large volumes of transactions requiring prioritisation
+### The problem addressed by CryptoGuard is:
 
-CryptoGuard explores how machine learning and graph-based analytics can be combined to reduce this complexity.
+> **How can machine learning, anomaly detection, and blockchain network analysis be combined to identify potentially high-risk cryptocurrency transactions and prioritize them for further investigation?**
 
-### The core idea
+CryptoGuard addresses this by combining predictive modelling with unsupervised anomaly detection and transaction-network activity.
+
+---
+
+# 💡 Proposed Solution
+
+CryptoGuard follows a multi-signal analytical approach.
 
 ```text
-Blockchain Transaction Data
-          ↓
-Data Understanding & Cleaning
-          ↓
-Feature Engineering
-          ↓
-Machine Learning
-          ↓
-Anomaly Detection
-          ↓
-Blockchain Network Analysis
-          ↓
-Risk & Investigation Scoring
-          ↓
-Explainable Results
-          ↓
-Interactive Streamlit Dashboard
+                BLOCKCHAIN TRANSACTION DATA
+                           │
+                           ▼
+                Data Understanding
+                           │
+                           ▼
+                  Data Preprocessing
+                           │
+                           ▼
+                  Feature Engineering
+                           │
+             ┌─────────────┴─────────────┐
+             ▼                           ▼
+     Supervised ML                 Anomaly Detection
+     XGBoost / RF / LR              Isolation Forest
+             │                           │
+             └─────────────┬─────────────┘
+                           ▼
+                 Blockchain Network
+                      Analysis
+                           │
+                           ▼
+                  Risk & Investigation
+                       Scoring
+                           │
+                           ▼
+                   Explainable AI
+                        SHAP
+                           │
+                           ▼
+                Streamlit Dashboard
+                           │
+                           ▼
+                 Analyst Investigation
 ```
 
 ---
 
-## 🎯 Project Objective
+# 🔎 What CryptoGuard Produces
 
-The objective of CryptoGuard is to build an analytical system that can:
+For an analysed transaction, the system can generate:
 
-1. Analyse cryptocurrency transaction behaviour.
-2. Detect patterns associated with potentially illicit transactions.
-3. Identify unusual transactions that differ from learned normal patterns.
-4. Incorporate transaction-network activity into investigation prioritisation.
-5. Provide model-based explanations for individual predictions.
-6. Present the results through an interactive dashboard.
+| Output                     | Purpose                                                         |
+| -------------------------- | --------------------------------------------------------------- |
+| **XGBoost Risk Score**     | Model-based risk signal                                         |
+| **Anomaly Score**          | Measures unusual transaction behaviour                          |
+| **Anomaly Flag**           | Identifies transactions crossing the selected anomaly threshold |
+| **Combined Risk Score**    | Combines predictive and anomaly signals                         |
+| **Risk Category**          | Low / Medium / High                                             |
+| **In-Degree**              | Incoming transaction relationships                              |
+| **Out-Degree**             | Outgoing transaction relationships                              |
+| **Total Degree**           | Overall transaction connectivity                                |
+| **Network Activity Score** | Relative network activity                                       |
+| **Investigation Score**    | Combined investigation-prioritisation signal                    |
+| **Investigation Priority** | Low / Medium / High priority                                    |
 
-CryptoGuard is an **academic and analytical project** and is not intended to determine criminality or replace professional AML/compliance investigation.
-
----
-
-## 🧠 What Makes CryptoGuard Different?
-
-CryptoGuard combines three complementary analytical signals:
-
-### 1. 🤖 Supervised Machine Learning
-
-The labelled portion of the dataset is used to train classification models capable of distinguishing between the available labelled transaction classes.
-
-Models explored:
-
-* Logistic Regression
-* Random Forest
-* XGBoost
-
-XGBoost is used as the primary predictive model for the downstream risk-analysis pipeline.
-
-### 2. 🚨 Anomaly Detection
-
-An **Isolation Forest** is applied to transactions without known class labels.
-
-This allows CryptoGuard to investigate transactions that may exhibit unusual patterns even when a confirmed label is unavailable.
-
-> An anomaly is **not automatically an illicit transaction**.
-
-### 3. 🕸️ Blockchain Network Analysis
-
-Transactions are represented as a directed graph using NetworkX.
-
-CryptoGuard analyses:
-
-* In-degree
-* Out-degree
-* Total degree
-* Network activity
-
-This provides additional context about how a transaction participates in the transaction network.
+These outputs are intended to **support investigation prioritisation**, not replace human judgement.
 
 ---
 
 # 📊 Dataset
 
-CryptoGuard uses the **Elliptic++** cryptocurrency transaction dataset.
+CryptoGuard uses the **Elliptic++ cryptocurrency transaction dataset**.
 
-The dataset contains transaction features, transaction relationships, and class information.
+The project works with three main components:
 
-### Dataset dimensions used in the project
+* Transaction features
+* Transaction class information
+* Transaction relationships / edges
 
-| Component                  | Records |
+### Dataset overview
+
+| Dataset component          | Records |
 | -------------------------- | ------: |
 | Transaction features       | 203,769 |
 | Class records              | 203,769 |
@@ -118,50 +116,82 @@ The dataset contains transaction features, transaction relationships, and class 
 | Labelled transactions      |  46,564 |
 | Unknown-class transactions | 157,205 |
 
-The labelled data contains two known classes, while the large unknown-class population is retained for anomaly and risk investigation.
-
 ### Class distribution
 
-| Class               | Transactions |  Share |
-| ------------------- | -----------: | -----: |
-| Potentially illicit |        4,545 |  2.23% |
-| Licit               |       42,019 | 20.62% |
-| Unknown             |      157,205 | 77.15% |
+| Class               | Transactions | Percentage |
+| ------------------- | -----------: | ---------: |
+| Potentially illicit |        4,545 |      2.23% |
+| Licit               |       42,019 |     20.62% |
+| Unknown             |      157,205 |     77.15% |
 
-The strong class imbalance is an important consideration when evaluating the classification models.
+The large unknown-class population is not used as labelled ground truth. Instead, it is analysed using anomaly detection, machine-learning risk signals, and network activity.
 
 ---
 
-# 🧪 Machine Learning Pipeline
+# 🧹 Data Preprocessing
 
-CryptoGuard uses a chronological train/test strategy rather than randomly shuffling transactions.
+The preprocessing pipeline includes:
+
+* Dataset loading
+* Transaction-ID consistency validation
+* Duplicate detection
+* Missing-value analysis
+* Feature-group identification
+* Class filtering
+* Infinite-value validation
+* Constant-feature checks
+* Median imputation
+* Chronological train/test splitting
+
+### Missing-value handling
+
+Missing values were concentrated in 17 transaction/network-related fields.
+
+Median imputation was fitted **only on the training data** and then applied to the test data to avoid information leakage.
+
+---
+
+# ⏳ Time-Aware Model Evaluation
+
+Instead of randomly shuffling the labelled transactions, CryptoGuard uses a chronological split.
 
 ```text
-Labelled Transactions
-        │
-        ├── Time Steps 1–40
-        │       ↓
-        │    Training
-        │
-        └── Time Steps 41–49
-                ↓
-              Testing
+Time Steps 1–40
+       │
+       ▼
+    TRAINING
+    36,591
+       │
+       │
+       ▼
+Time Steps 41–49
+       │
+       ▼
+     TESTING
+      9,973
 ```
 
-This approach provides a more realistic experiment by evaluating the model on a later time period.
+This allows the model to be evaluated on a later time period rather than simply mixing earlier and later observations.
 
-### Preprocessing
+The data also exhibits a change in class proportions between the training and test periods, making time-aware evaluation particularly relevant.
 
-The pipeline includes:
+---
 
-* transaction ID separation
-* class filtering
-* feature selection
-* missing-value analysis
-* training-set median imputation
-* validation of infinite values
-* constant-feature checks
-* chronological train/test splitting
+# 🤖 Machine Learning Models
+
+Three supervised classification models were evaluated:
+
+### Logistic Regression
+
+A linear baseline model used to establish a reference point.
+
+### Random Forest
+
+An ensemble tree-based model capable of capturing nonlinear relationships.
+
+### XGBoost
+
+A gradient-boosted decision-tree model used as the primary predictive model for the downstream CryptoGuard risk-analysis pipeline.
 
 ---
 
@@ -175,198 +205,372 @@ The following results were obtained on the chronological test set.
 | Random Forest       |   0.9762 |    0.9527 | 0.5763 | 0.7182 |  0.9578 | 0.7494 |
 | XGBoost             |   0.9706 |    0.7516 | 0.6584 | 0.7019 |  0.9620 | 0.7848 |
 
-Because the dataset is highly imbalanced, **PR-AUC, recall, precision and F1** are considered alongside accuracy rather than relying on accuracy alone.
+Because the labelled dataset is highly imbalanced, accuracy alone is not sufficient for interpreting model performance. Precision, recall, F1, ROC-AUC and particularly PR-AUC are considered together.
 
-XGBoost is used as the primary model in the downstream CryptoGuard risk-analysis pipeline.
-
----
-
-# 🔬 Explainable AI
-
-A risk score is more useful when an analyst can investigate **why** the model produced it.
-
-CryptoGuard uses **SHAP (SHapley Additive exPlanations)** to examine individual model predictions.
-
-For example, for an analysed transaction:
+### XGBoost test-set results
 
 ```text
-Transaction ID
-12661353
-
-Predicted risk probability
-≈ 99.74%
+Accuracy       97.06%
+Precision      75.16%
+Recall         65.84%
+F1 Score       70.19%
+ROC-AUC        96.20%
+PR-AUC         78.48%
 ```
 
-The SHAP analysis identifies which features contributed most strongly toward or away from the model's prediction.
-
-One important example was the `size` feature, which produced the largest positive SHAP contribution for this transaction.
-
-Because the Elliptic++ feature names are anonymised, CryptoGuard deliberately avoids assigning unsupported real-world meanings to individual `Local_feature_*` or `Aggregate_feature_*` variables.
-
-### Why this matters
-
-```text
-Model Prediction
-      ↓
-"What happened?"
-      ↓
-SHAP Explanation
-      ↓
-"Which features influenced this prediction?"
-```
-
-This makes the system more suitable for **analytical investigation and model interpretation**.
+XGBoost is subsequently used as the primary predictive model in the risk-analysis pipeline.
 
 ---
 
 # 🚨 Anomaly Detection
 
-The unknown-class transactions are analysed separately using Isolation Forest.
+A large portion of the dataset has an unknown class.
 
-CryptoGuard calculates an anomaly signal and identifies transactions located toward the extreme end of the anomaly-score distribution.
+Instead of ignoring these transactions, CryptoGuard analyses them using **Isolation Forest**.
+
+### Why?
+
+A transaction can be unusual even when there is no confirmed label available.
+
+The anomaly-detection pipeline:
+
+```text
+Unknown Transactions
+        ↓
+Isolation Forest
+        ↓
+Anomaly Score
+        ↓
+Percentile Analysis
+        ↓
+High-Anomaly Transactions
+```
 
 An initial operational threshold was selected at the **99th percentile** of the anomaly-score distribution.
 
-This produced:
+This identified:
 
-**1,573 high-anomaly transactions**
+### **1,573 high-anomaly transactions**
 
-The threshold is a project-defined analytical choice and should not be interpreted as proof of illicit behaviour.
+This threshold is a project-defined analytical choice and does **not** mean that these transactions are illicit.
 
 ---
 
 # 🕸️ Blockchain Network Analysis
 
-CryptoGuard converts the transaction relationship data into a directed NetworkX graph.
+CryptoGuard represents transaction relationships as a directed graph using **NetworkX**.
 
 ### Network metrics
 
 **In-Degree**
 
-Number of transaction relationships entering a node.
+Number of transaction relationships entering a transaction/node.
 
 **Out-Degree**
 
-Number of transaction relationships leaving a node.
+Number of transaction relationships leaving a transaction/node.
 
 **Total Degree**
 
-Combined transaction connectivity.
+Combined incoming and outgoing connectivity.
 
 **Network Activity Score**
 
 A percentile-based representation of network activity.
 
-### Important analytical observation
+### Network statistics
 
-A highly connected transaction is **not automatically high risk**.
+| Metric               |  Result |
+| -------------------- | ------: |
+| Graph nodes          | 203,769 |
+| Graph edges          | 234,355 |
+| Maximum in-degree    |     212 |
+| Maximum out-degree   |     122 |
+| Maximum total degree |     212 |
 
-Network connectivity is therefore treated as an additional analytical signal rather than a standalone risk indicator.
+### Important observation
+
+Network connectivity is **not treated as a standalone risk indicator**.
+
+A highly connected transaction can have a low machine-learning risk signal, while another highly connected transaction can have a high risk signal.
+
+Therefore, network activity is used as **additional context** rather than proof of suspicious activity.
 
 ---
 
 # 🎯 Investigation Scoring
 
-CryptoGuard combines multiple signals into an investigation-oriented score:
+CryptoGuard combines three analytical signals into an investigation score:
 
 ```text
 Investigation Score
 =
-0.60 × XGBoost Risk
+0.60 × XGBoost Risk Score
 +
-0.20 × Normalized Anomaly Signal
+0.20 × Normalized Anomaly Score
 +
-0.20 × Network Activity
+0.20 × Network Activity Score
 ```
 
-The resulting score is used to prioritise transactions for further analytical investigation.
+The weights are **project-defined heuristic values** and have not been presented as validated AML/compliance weights.
 
-### Investigation categories
+### Investigation priorities
 
-| Category | Purpose                       |
-| -------- | ----------------------------- |
-| Low      | Lower investigation priority  |
-| Medium   | Requires additional review    |
-| High     | Higher investigation priority |
+The resulting scores are grouped into:
 
-These categories are **project-defined analytical groupings**, not calibrated probabilities or legal classifications.
+```text
+LOW PRIORITY
+      ↓
+MEDIUM PRIORITY
+      ↓
+HIGH PRIORITY
+```
+
+The project uses percentile-based thresholds to create these investigation categories.
+
+For the generated unknown-transaction risk dataset:
+
+| Priority / Risk Category | Transactions |
+| ------------------------ | -----------: |
+| Low                      |      149,344 |
+| Medium                   |        6,288 |
+| High                     |        1,573 |
+
+These categories are intended for **analytical prioritisation**, not probability estimates or legal classifications.
 
 ---
 
-# 🖥️ Interactive Dashboard
+# 🔍 Example Transaction Investigation
 
-CryptoGuard includes a Streamlit dashboard for exploring the generated risk results.
+One of the transactions investigated through the Streamlit dashboard was:
 
-### Dashboard capabilities
+## Transaction `30157957`
 
-* Dataset overview
-* Risk-category distribution
-* Investigation-priority distribution
-* Transaction search
-* Individual transaction risk information
-* Anomaly information
-* Blockchain network activity
-* Investigation score
-* Transaction-level investigation data
+| Signal                   |            Result |
+| ------------------------ | ----------------: |
+| XGBoost Risk Score       |        **0.9969** |
+| Anomaly Score            |       **-0.0271** |
+| Normalized Anomaly Score |        **0.4152** |
+| Combined Risk Score      |        **0.8224** |
+| Risk Category            |     **High Risk** |
+| In-Degree                |            **43** |
+| Out-Degree               |             **0** |
+| Total Degree             |            **43** |
+| Network Activity Score   |        **0.9995** |
+| Investigation Score      |        **0.8811** |
+| Investigation Priority   | **High Priority** |
 
-Example investigation workflow:
+### Interpretation
+
+The transaction received a high investigation score because multiple analytical signals contributed to the result:
 
 ```text
-Search Transaction ID
-        ↓
-Risk Profile
-        ↓
-ML Risk Signal
-        ↓
+High XGBoost Risk
+        +
+High Network Activity
+        +
 Anomaly Signal
         ↓
-Network Activity
+High Investigation Score
         ↓
-Investigation Priority
+High Investigation Priority
+```
+
+This means the transaction is **prioritised for further investigation**.
+
+It does not establish that the transaction is criminal or illicit.
+
+---
+
+# 🧠 Explainable AI with SHAP
+
+CryptoGuard uses **SHAP** to understand individual XGBoost predictions.
+
+For an analysed labelled transaction:
+
+```text
+Transaction ID: 12661353
+
+Predicted probability:
+≈ 99.74%
+```
+
+SHAP identifies the features that contributed toward or away from the model prediction.
+
+### Example
+
+For transaction `12661353`, the `size` feature produced the largest positive SHAP contribution among the analysed features.
+
+The model's SHAP explanation can therefore be expressed as:
+
+```text
+Transaction
+     ↓
+XGBoost Prediction
+     ↓
+SHAP Analysis
+     ↓
+Feature Contributions
+     ↓
+Human-Readable Investigation Context
+```
+
+Because many Elliptic++ variables are anonymised, CryptoGuard does **not** assign unsupported real-world meanings to `Local_feature_*` or `Aggregate_feature_*` variables.
+
+> Feature importance and SHAP contribution describe model behaviour; they do not establish causation.
+
+---
+
+# 🖥️ Streamlit Dashboard
+
+CryptoGuard provides an interactive Streamlit dashboard for exploring the generated investigation results.
+
+### Dashboard sections
+
+* Dataset Overview
+* Risk Distribution
+* Investigation Priority
+* Transaction Investigation
+* Transaction Data
+
+### Investigation workflow
+
+```text
+Enter Transaction ID
+        ↓
+Retrieve Transaction
+        ↓
+View ML Risk Signal
+        ↓
+View Anomaly Signal
+        ↓
+View Network Activity
+        ↓
+View Investigation Score
+        ↓
+View Investigation Priority
+```
+
+The dashboard allows an analyst to move from a large transaction dataset to an individual transaction-level investigation view.
+
+---
+
+# 📸 Dashboard Preview
+
+> Add your actual Streamlit dashboard screenshot here.
+
+```text
+docs/
+└── dashboard-preview.png
+```
+
+Once the screenshot is added to the repository, display it in this section using:
+
+```markdown
+![CryptoGuard Dashboard](docs/dashboard-preview.png)
+```
+
+---
+
+# 📊 Project Visualisations
+
+The final repository should include selected project-generated figures rather than every notebook plot.
+
+Recommended figures:
+
+```text
+reports/
+└── figures/
+    ├── class_distribution.png
+    ├── model_performance.png
+    ├── anomaly_distribution.png
+    ├── risk_distribution.png
+    ├── network_analysis.png
+    └── shap_explanation.png
+```
+
+Suggested README presentation:
+
+### Class Distribution
+
+Show the severe imbalance between labelled classes and the unknown population.
+
+### Model Comparison
+
+Show Accuracy, Precision, Recall, F1, ROC-AUC and PR-AUC.
+
+### Risk Distribution
+
+Show how the unknown transactions are distributed across investigation categories.
+
+### Anomaly Detection
+
+Show the anomaly-score distribution and selected threshold.
+
+### Network Analysis
+
+Show transaction connectivity or network-degree distribution.
+
+### SHAP Explanation
+
+Show the actual SHAP explanation for transaction `12661353`.
+
+---
+
+# 🏗️ System Architecture
+
+```text
+                    ┌──────────────────────┐
+                    │  Elliptic++ Dataset  │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ Data Preprocessing   │
+                    │ & Validation         │
+                    └──────────┬───────────┘
+                               │
+                ┌──────────────┼──────────────┐
+                │              │              │
+                ▼              ▼              ▼
+          ┌──────────┐  ┌────────────┐  ┌─────────────┐
+          │ XGBoost  │  │ Isolation  │  │  NetworkX   │
+          │ Model    │  │  Forest    │  │  Graph      │
+          └────┬─────┘  └─────┬──────┘  └──────┬──────┘
+               │              │                │
+               └──────────────┼────────────────┘
+                              ▼
+                    ┌──────────────────────┐
+                    │ Investigation Score  │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ SHAP Explainability  │
+                    └──────────┬───────────┘
+                               │
+                               ▼
+                    ┌──────────────────────┐
+                    │ Streamlit Dashboard  │
+                    └──────────────────────┘
 ```
 
 ---
 
 # 🧰 Technology Stack
 
-### Programming
-
-* Python
-
-### Data Analysis
-
-* Pandas
-* NumPy
-
-### Machine Learning
-
-* Scikit-learn
-* XGBoost
-
-### Explainable AI
-
-* SHAP
-
-### Blockchain / Network Analytics
-
-* NetworkX
-
-### Visualization
-
-* Matplotlib
-* Seaborn
-* Plotly
-
-### Dashboard
-
-* Streamlit
-
-### Development
-
-* Jupyter Notebook
-* VS Code
-* Git
-* GitHub
+| Category          | Technologies                |
+| ----------------- | --------------------------- |
+| Language          | Python                      |
+| Data Processing   | Pandas, NumPy               |
+| Machine Learning  | Scikit-learn, XGBoost       |
+| Anomaly Detection | Isolation Forest            |
+| Network Analysis  | NetworkX                    |
+| Explainable AI    | SHAP                        |
+| Visualisation     | Matplotlib, Seaborn, Plotly |
+| Dashboard         | Streamlit                   |
+| Development       | Jupyter Notebook, VS Code   |
+| Version Control   | Git, GitHub                 |
 
 ---
 
@@ -398,13 +602,14 @@ CryptoGuard/
 │   └── 01_data_understanding.ipynb
 │
 ├── reports/
+│   └── figures/
 │
 ├── .gitignore
 ├── README.md
 └── requirements.txt
 ```
 
-> Large datasets and trained model binaries are intentionally excluded from version control.
+> Large datasets, generated processed data, trained model binaries, and virtual-environment files are excluded from the public Git repository through `.gitignore`.
 
 ---
 
@@ -431,7 +636,7 @@ Activate it on Windows:
 
 Install dependencies:
 
-```bash
+```powershell
 pip install -r requirements.txt
 ```
 
@@ -445,69 +650,67 @@ From the project root:
 streamlit run .\dashboard\app.py
 ```
 
-The Streamlit application will open in your browser.
+The dashboard will open in your browser.
 
 ---
 
-# 🔁 Reproducibility
+# 📓 Notebook
 
-The project follows a structured analytical workflow:
+The main analysis notebook is:
 
 ```text
-Raw Dataset
-    ↓
-Data Understanding
-    ↓
-Preprocessing
-    ↓
-Chronological Split
-    ↓
-Model Training
-    ↓
-Model Evaluation
-    ↓
-Anomaly Detection
-    ↓
-Network Analysis
-    ↓
-Risk Scoring
-    ↓
-Explainability
-    ↓
-Dashboard
+notebook/01_data_understanding.ipynb
 ```
 
-The trained models and generated analytical datasets are maintained separately from the public source-code repository because of their size and reproducibility considerations.
+It contains the data-understanding and modelling workflow developed for the project.
+
+---
+
+# 🔐 Responsible Use
+
+CryptoGuard is an **academic and research prototype**.
+
+A high-risk score, anomaly flag, or high investigation priority:
+
+* does not prove criminal behaviour
+* does not prove illicit activity
+* does not identify a criminal
+* should not be treated as a legal conclusion
+* should not replace professional AML/compliance investigation
+
+The system is designed to identify **transactions that may warrant additional analytical review**.
 
 ---
 
 # ⚠️ Limitations
 
-CryptoGuard has several important limitations.
+### Dataset Generalisation
 
-### Dataset limitations
+Results are based on the Elliptic++ dataset and should not automatically be assumed to generalise to every blockchain or cryptocurrency ecosystem.
 
-The system is evaluated using the available Elliptic++ dataset and therefore should not automatically be assumed to generalise to every blockchain, exchange, wallet population, or time period.
+### Class Imbalance
 
-### Class imbalance
+The labelled dataset contains a strong imbalance between the available classes.
 
-The labelled data is strongly imbalanced, which affects the interpretation of classification metrics.
+### Temporal Distribution Shift
 
-### Anomaly detection
+The class distribution changes between the training and later test periods, which can affect model performance.
 
-Anomalous behaviour does not necessarily indicate illicit behaviour.
+### Anomaly Detection
 
-### Risk scoring
+An unusual transaction is not necessarily an illicit transaction.
 
-The combined investigation score uses project-defined weights and is **not a calibrated probability of illicit activity**.
+### Heuristic Risk Scoring
 
-### Feature interpretability
+The combined investigation score uses project-defined weights and is not a calibrated probability.
 
-Several dataset variables are anonymised. Their statistical contribution can be analysed, but their real-world semantic meaning should not be invented.
+### Feature Semantics
 
-### Operational use
+Anonymised dataset features cannot reliably be assigned real-world meanings without additional information.
 
-CryptoGuard is an academic prototype and should not be used as an autonomous AML, law-enforcement, compliance, or criminal-risk decision system.
+### Operational Deployment
+
+The current implementation is a research/academic prototype rather than a production AML or financial-crime detection platform.
 
 ---
 
@@ -515,103 +718,106 @@ CryptoGuard is an academic prototype and should not be used as an autonomous AML
 
 Potential future development includes:
 
-* model calibration
-* threshold optimisation
-* temporal drift monitoring
-* graph-based machine learning
-* advanced graph embeddings
-* additional anomaly-detection algorithms
-* automated model monitoring
-* richer transaction-level explanations
-* analyst feedback loops
-* API-based deployment
-* containerisation
-* cloud deployment
-* testing and CI/CD
-* support for additional blockchain datasets
+* Probability calibration
+* Threshold optimisation
+* Temporal drift monitoring
+* Graph-based machine learning
+* Graph embeddings
+* Advanced anomaly-detection methods
+* Model monitoring
+* Analyst feedback mechanisms
+* REST API deployment
+* Docker containerisation
+* Cloud deployment
+* Automated testing
+* CI/CD integration
+* Support for additional blockchain datasets
+* More detailed transaction-level explanations
 
 ---
 
 # 🎓 Academic & Career Relevance
 
-CryptoGuard brings together several areas of modern data and financial technology:
+CryptoGuard combines several areas of modern technology:
 
 ```text
 Data Science
-     +
+      +
 Machine Learning
-     +
+      +
 Blockchain Analytics
-     +
+      +
 Cybersecurity
-     +
-Explainable AI
-     +
+      +
 Network Analysis
-     +
-Financial Risk Investigation
+      +
+Explainable AI
+      +
+Financial Risk Analytics
 ```
 
 The project demonstrates practical experience with:
 
-* real-world data preprocessing
-* imbalanced classification
-* time-aware model evaluation
-* ensemble machine learning
-* anomaly detection
-* graph analytics
-* explainable AI
-* interactive data applications
-* reproducible project organisation
-
-This makes CryptoGuard suitable as an **MCA academic project and portfolio project for data science, analytics, blockchain analytics, and crypto-risk roles**.
+* Real-world dataset analysis
+* Data preprocessing
+* Imbalanced classification
+* Time-aware evaluation
+* Ensemble machine learning
+* Anomaly detection
+* Graph analytics
+* Explainable AI
+* Risk scoring
+* Interactive dashboard development
+* Git/GitHub project organisation
 
 ---
 
-# 🔐 Responsible Use
+# 📌 Key Takeaways
 
-CryptoGuard produces **analytical investigation signals**, not accusations.
+CryptoGuard demonstrates that blockchain transaction analysis can be approached using **multiple complementary signals** rather than relying on a single model.
 
-A high-risk or anomalous transaction should be interpreted as a reason for **further investigation**, not as evidence that a person or entity committed an illegal act.
+The project combines:
 
-Human review, additional evidence, domain expertise, and appropriate legal/compliance procedures are required for real-world decisions.
+```text
+Predictive Signal
+       +
+Anomaly Signal
+       +
+Network Signal
+       ↓
+Investigation Priority
+```
+
+The final system converts large-scale blockchain transaction data into an **interactive investigation workflow**.
 
 ---
 
 # 👩‍💻 Author
 
-**Deekshitha D V**
+## Deekshitha D V
 
-MCA | Data Science | Data Analytics | Blockchain & Crypto Security
+**MCA | Data Science | Data Analytics | Blockchain & Crypto Security**
 
-Interested in:
+Areas of interest:
 
 * Data Science
 * Data Analytics
+* Machine Learning
 * Blockchain Analytics
 * Crypto Risk Analysis
-* Machine Learning
 * Explainable AI
 
-### Connect
+### Profiles
 
-* **LinkedIn:** [Deekshitha D V](https://www.linkedin.com/in/deekshithadv/)
-* **GitHub:** [Deekshitha-DV](https://github.com/Deekshitha-DV)
-
----
-
-## ⭐ Project Status
-
-**Current stage:** Functional academic prototype
-
-The core pipeline includes data analysis, supervised machine learning, anomaly detection, blockchain network analysis, explainability, risk scoring, and an interactive Streamlit dashboard.
-
-Further work is focused on documentation, validation, testing, reproducibility, and future deployment improvements.
+* [GitHub](https://github.com/Deekshitha-DV)
+* [LinkedIn](https://www.linkedin.com/in/deekshithadv/)
 
 ---
 
-### 📌 Disclaimer
+# 📄 Project Disclaimer
 
 CryptoGuard is developed for **academic, research, and educational purposes**.
 
-It does not establish criminality, legal liability, or definitive illicit activity. Risk scores and anomaly signals should be treated as analytical indicators requiring appropriate human investigation.
+The system generates analytical risk and anomaly signals for investigation prioritisation. It does not establish criminality, legal liability, or definitive illicit activity.
+
+Any real-world financial, compliance, or investigative decision should involve appropriate human review, additional evidence, domain expertise, and applicable legal and regulatory procedures.
